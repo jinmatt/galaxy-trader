@@ -1,0 +1,14 @@
+{
+  "name": "galaxy-trader",
+  "version": "0.1.0",
+  "description": "An intergalactic transaction translator for galaxy traders.",
+  "main": "app.js",
+  "bin": {
+    "galaxy-trader": "./app.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jinsu Mathew <jinsu.mails@gmail.com>",
+  "license": "ISC"
+}
