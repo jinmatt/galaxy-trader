@@ -81,7 +81,7 @@ Translator.prototype.setMetalPrice = function (metal, creditFromSymbols, totalCr
  * @method calculate
  * @param {array} symbols - can be ['glob', 'pish', 'silver']
  * @return {integer} credits
- * @todo return -1 if invalid symbols exists in the input array
+ * @return {object} invalidSymbol - if unrecognisable symbols comes up
  */
 Translator.prototype.calculate = function (symbols) {
   var credits = 0;
@@ -99,6 +99,8 @@ Translator.prototype.calculate = function (symbols) {
     intergalacticUnit = this.dict.find(o => o.symbol === symbols[i]);
     if (intergalacticUnit) {
       romain += intergalacticUnit.romain;
+    } else {
+      return { invalidSymbol: symbols[i] };
     }
   }
 

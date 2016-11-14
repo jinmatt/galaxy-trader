@@ -9,7 +9,7 @@ const transactType = require('../consts/transact-type');
  * Input language parser
  */
 function Klingon() {
-  this.setSymbolRegex = /^([\w]+)\ is\ ([IVXLCDM]{1,2})$/;
+  this.setSymbolRegex = /^([\w]+)\ is\ ([A-Z]{1,2})$/;
   this.setMetalPriceRegex = /^([a-zA-z ]+)\ ([I|i]ron|[S|s]ilver|[G|g]old)\ is\ ([\d]+)\ [C|c]redits$/;
   this.calculateCreditsRegex = /^([H|h]ow much|[H|h]ow many [C|c]redits)\ is\ ([a-zA-z ]+)(\??)$/;
 }

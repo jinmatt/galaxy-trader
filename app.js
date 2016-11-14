@@ -43,7 +43,10 @@ rl.on('line', (line) => {
 
   switch (statement.type) {
     case transactType.SET_SYMBOL:
-      translator.setSymbol(statement.symbol, statement.romainLetter);
+      var validRomainLetter = translator.setSymbol(statement.symbol, statement.romainLetter);
+      if (validRomainLetter === -1) {
+        transactOutput.push(statement.romainLetter + ' is not a valid Romain numeral');
+      }
       break;
     case transactType.SET_METAL_PRICE:
       translator.setMetalPrice(statement.metal, translator.calculate(statement.symbols), statement.knownCredit);
@@ -51,6 +54,10 @@ rl.on('line', (line) => {
     case transactType.CALCULATE_CREDITS:
       var symbolsAndMetals = statement.symbolsAndMetals.join(' ');
       var totalCredits = translator.calculate(statement.symbolsAndMetals);
+      if (typeof totalCredits !== 'number') {
+        transactOutput.push('I don\'t know what ' + totalCredits.invalidSymbol + ' is')
+        break;
+      }
       transactOutput.push(symbolsAndMetals + ' is ' + totalCredits + ' Credits');
       break;
     default:
