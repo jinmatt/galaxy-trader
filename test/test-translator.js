@@ -11,17 +11,17 @@ var translator = new Translator();
 
 describe('Translator functions', function () {
   describe('#setSymbol()', function () {
-    it('should return -1 when invalid romain numeral is set', function () {
+    it('should return -1 when invalid Roman numeral is set', function () {
       var invalid = translator.setSymbol('glob', 'H');
       expect(invalid).to.equal(-1);
     });
 
-    it('should return an object when a symbol is set to a romain numeral', function () {
+    it('should return an object when a symbol is set to a Roman numeral', function () {
       var intergalacticObject = translator.setSymbol('glob', 'I');
       expect(intergalacticObject).to.be.an('object');
       expect(intergalacticObject).to.contain.all.keys({
         decimal: 1,
-        romain: 'I',
+        roman: 'I',
         symbol: 'glob',
       });
     });

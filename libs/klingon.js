@@ -27,7 +27,7 @@ Klingon.prototype.parse = function (text) {
     return {
       type: transactType.SET_SYMBOL,
       symbol: parsed[1],
-      romainLetter: parsed[2],
+      romanLetter: parsed[2],
     };
   }
 

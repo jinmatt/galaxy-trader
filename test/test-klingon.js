@@ -22,7 +22,7 @@ describe('Klingon functions', function () {
       expect(statementType).to.contain.all.keys({
         type: transactType.SET_SYMBOL,
         symbol: 'glob',
-        romainLetter: 'I',
+        romanLetter: 'I',
       });
     });
 

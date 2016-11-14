@@ -43,9 +43,9 @@ rl.on('line', (line) => {
 
   switch (statement.type) {
     case transactType.SET_SYMBOL:
-      var validRomainLetter = translator.setSymbol(statement.symbol, statement.romainLetter);
-      if (validRomainLetter === -1) {
-        transactOutput.push(statement.romainLetter + ' is not a valid Romain numeral');
+      var validRomanLetter = translator.setSymbol(statement.symbol, statement.romanLetter);
+      if (validRomanLetter === -1) {
+        transactOutput.push(statement.romanLetter + ' is not a valid Roman numeral');
       }
       break;
     case transactType.SET_METAL_PRICE:
