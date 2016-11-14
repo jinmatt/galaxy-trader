@@ -5,20 +5,64 @@
  */
 
 // Module dependencies
-var Translator = require('./translator');
+var readline = require('readline');
+var fs = require('fs');
+var Translator = require('./libs/translator');
+var Klingon = require('./libs/klingon');
+const transactType = require('./consts/transact-type');
 
 var translator = new Translator();
-translator.setSymbol('glob', 'I');
-translator.setSymbol('prok', 'V');
-translator.setSymbol('pish', 'X');
-translator.setSymbol('tegj', 'L');
+var klingonParser = new Klingon();
+var inputFile;
+var transactOutput = [];
 
-// Test cases
-var str = 'pish tegj glob glob';
-console.log(translator.calculate(str.split(' ')));
+// Handle if no cli arguments passed
+if (process.argv.length <= 2) {
+  console.log('Usage: galaxy-trader inputFile');
+  process.exit(-1);
+}
 
-var symbolMetal = 'glob glob';
-console.log(translator.setMetalPrice('Silver', translator.calculate(symbolMetal.split(' ')), 34));
+// Check whether file accessible or not
+inputFile = process.argv[2];
+fs.stat(inputFile, (err, stats) => {
+  if (err) {
+    console.log('No file named ' + inputFile + ' exists or accessible.');
+    process.exit(-1);
+  }
+});
 
-var metalCombo = 'glob prok Silver';
-console.log(translator.calculate(metalCombo.split(' ')));
+var rl = readline.createInterface({
+  input: fs.createReadStream(process.argv[2]),
+});
+
+/**
+ * Process statements line by line
+ */
+rl.on('line', (line) => {
+  var statement = klingonParser.parse(line);
+
+  switch (statement.type) {
+    case transactType.SET_SYMBOL:
+      translator.setSymbol(statement.symbol, statement.romainLetter);
+      break;
+    case transactType.SET_METAL_PRICE:
+      translator.setMetalPrice(statement.metal, translator.calculate(statement.symbols), statement.knownCredit);
+      break;
+    case transactType.CALCULATE_CREDITS:
+      var symbolsAndMetals = statement.symbolsAndMetals.join(' ');
+      var totalCredits = translator.calculate(statement.symbolsAndMetals);
+      transactOutput.push(symbolsAndMetals + ' is ' + totalCredits + ' Credits');
+      break;
+    default:
+      transactOutput.push('I have no idea what you are talking about');
+  }
+});
+
+/**
+ * Show proccessed transactions
+ */
+rl.on('close', () => {
+  transactOutput.forEach((meaningfulLine) => {
+    console.log(meaningfulLine);
+  });
+});
